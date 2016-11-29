@@ -1,1 +1,2 @@
 3 + cos(2 * pi * x) + 2 * sin(2 * pi * x) + 5 * cos(3 * pi * x) + 4 * sin(3 * pi * x)
+4 + cos(6 * pi * x) + 2 * sin(6 * pi * x) + 2 * cos(7 * pi * x) + 5 * sin(7 * pi * x)
