@@ -30,7 +30,8 @@ def get_unimodal_segments(target_function, interval_begin, interval_end, min_ext
     is_in_interval = True
     if is_decreasing_at_point(target_function, interval_begin):
         is_in_interval, current_interval_end = get_first_increasing_point(interval_begin)
-        result.append((interval_begin, current_interval_end))
+        if is_in_interval:
+            result.append((interval_begin, current_interval_end))
 
     end_iteration = not is_in_interval
     while not end_iteration:
