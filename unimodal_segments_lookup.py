@@ -1,8 +1,11 @@
-def is_increasing_at_point(function, point, epsilon=0.0001):
+EPS = 0.0001
+EXTREMUM_DELTA_COEFFICIENT = 1/3
+
+def is_increasing_at_point(function, point, epsilon=EPS):
     return (function(point) - function(point + epsilon)) < 0
 
 
-def is_decreasing_at_point(function, point, epsilon=0.0001):
+def is_decreasing_at_point(function, point, epsilon=EPS):
     return (function(point) - function(point + epsilon)) > 0
 
 
@@ -16,7 +19,7 @@ def get_first_point_where(target_function, current_point, condition_function, de
 
 def get_unimodal_segments(target_function, interval_begin, interval_end, min_extremum_delta):
     result = []
-    delta = min_extremum_delta / 3
+    delta = min_extremum_delta * EXTREMUM_DELTA_COEFFICIENT
 
     get_first_decreasing_point = lambda x: get_first_point_where(target_function, x, is_decreasing_at_point, delta,
                                                                  interval_end)

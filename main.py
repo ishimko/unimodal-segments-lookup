@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 SAFE_LIST = ['math', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 'fabs', 'floor',
              'fmod', 'frexp', 'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi',
              'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh']
-
+POINTS_COUNT = 1000
 
 def get_function_object_for_plotting(user_function, args):
     for name in SAFE_LIST:
@@ -23,7 +23,7 @@ def get_function_object(user_function):
 
 
 def draw_plot(user_function, unimodal_segments, interval_start, interval_end):
-    points = np.linspace(interval_start, interval_end, 1000)
+    points = np.linspace(interval_start, interval_end, POINTS_COUNT)
 
     f = get_function_object_for_plotting(user_function, points)
     plt.plot(points, f)
