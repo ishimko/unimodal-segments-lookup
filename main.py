@@ -3,23 +3,27 @@ from unimodal_segments_lookup import get_unimodal_segments
 import numpy as np
 import matplotlib.pyplot as plt
 
-SAFE_LIST = ['math', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 'fabs', 'floor',
-             'fmod', 'frexp', 'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi',
-             'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh']
 POINTS_COUNT = 1000
 
+MATH_FUNCTIONS_NAMES = ['math', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 'fabs', 'floor',
+             'fmod', 'frexp', 'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi',
+             'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh']
+
+MATH_FUNCTIONS = dict([(k, globals().get(k, None)) for k in MATH_FUNCTIONS_NAMES])
+
+LAMBDA_DECLARATION = 'lambda x: {}'
+
+NUMPY_IMPORT_NAME = 'np'
+
+
 def get_function_object_for_plotting(user_function, args):
-    for name in SAFE_LIST:
-        user_function = user_function.replace(name, 'np.' + name)
-    return eval(user_function, {'np': np}, {'x': args})
+    for name in MATH_FUNCTIONS_NAMES:
+        user_function = user_function.replace(name, '{}.'.format(NUMPY_IMPORT_NAME) + name)
+    return eval(user_function, {NUMPY_IMPORT_NAME: np}, {'x': args})
 
 
 def get_function_object(user_function):
-    def f(x):
-        math_functions = dict([(k, globals().get(k, None)) for k in SAFE_LIST])
-        return eval(user_function, math_functions, {'x': x})
-
-    return f
+    return eval(LAMBDA_DECLARATION.format(user_function), MATH_FUNCTIONS)
 
 
 def draw_plot(user_function, unimodal_segments, interval_start, interval_end):
